@@ -27,6 +27,9 @@ public class ClassFileParser extends AbstractParser {
     public static final int CONSTANT_METHOD = 10;
     public static final int CONSTANT_INTERFACEMETHOD = 11;
     public static final int CONSTANT_NAMEANDTYPE = 12;
+    public static final int CONSTANT_METHODHANDLE = 15;
+    public static final int CONSTANT_METHODTYPE = 16;
+    public static final int CONSTANT_INVOKEDYNAMIC = 18;
     public static final char CLASS_DESCRIPTOR = 'L';
     public static final int ACC_INTERFACE = 0x200;
     public static final int ACC_ABSTRACT = 0x400;
@@ -291,6 +294,23 @@ public class ClassFileParser extends AbstractParser {
         case (ClassFileParser.CONSTANT_UTF8):
             result = new Constant(tag, in.readUTF());
             break;
+        case (ClassFileParser.CONSTANT_METHODHANDLE):
+            // TODO
+            byte referenceKind = in.readByte();
+            int referenceIndex = in.readUnsignedShort();
+            result = new Constant(tag, -1, -1);
+            break;
+        case (ClassFileParser.CONSTANT_METHODTYPE):
+            // TODO
+            int descriptorIndex = in.readUnsignedShort();
+            result = new Constant(tag, -1, -1);
+            break;
+        case (ClassFileParser.CONSTANT_INVOKEDYNAMIC):
+            // TODO
+            int bootstrapIndex = in.readUnsignedShort();
+            int nameAndTypeIndex = in.readUnsignedShort();
+            result = new Constant(tag, -1, -1);
+          break;
         default:
             throw new IOException("Unknown constant: " + tag);
         }
